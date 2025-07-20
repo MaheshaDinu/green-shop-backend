@@ -2,6 +2,8 @@ import express,{Express,Request,Response} from "express";
 import productRoutes from "./routes/product.routes";
 import cors from "cors"
 import contactRoutes from "./routes/contact.routes";
+import authRoutes from "./routes/auth.routes";
+import {authenticateToken} from "./middleware/auth.middleware";
 
 //initialize the express app
 const app = express();
@@ -27,7 +29,8 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use(express.json())
 
-app.use("/products", productRoutes)
+app.use("/api/auth",authRoutes)
+app.use("/products",authenticateToken, productRoutes)
 app.use("/contact", contactRoutes)
 
 
